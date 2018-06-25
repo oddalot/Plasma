@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:padding="10dp">
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingRight="10dp"
+    android:layout_toLeftOf="@+id/main_podcast_album_art_image_view"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentLeft="true">
+        <TextView
+            android:id="@+id/main_podcast_track_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/colorPrimaryBlack"
+            android:textSize="16dp" >
+        </TextView>
+        <TextView
+            android:id="@+id/main_podcast_artist_name_text_view"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14dp" >
+        </TextView>
+        <TextView
+            android:textColor="@color/colorAccent"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/main_podcast_episode_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/main_podcast_album_art_image_view"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="right"
+        android:layout_width="60dp"
+        android:layout_height="60dp" >
+    </ImageView>
+</RelativeLayout>

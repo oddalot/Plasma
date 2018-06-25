@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="net.williamott.plasma.activities.EpisodeActivity"
+    tools:showIn="@layout/activity_episode">
+
+   <RelativeLayout
+       android:id="@+id/episode_relative_layout"
+       android:layout_marginTop="20dp"
+       android:paddingBottom="40dp"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+       <TextView
+           android:layout_marginTop="20dp"
+           android:layout_marginLeft="20dp"
+           android:layout_marginRight="20dp"
+           android:layout_marginBottom="5dp"
+           android:layout_alignParentTop="true"
+           android:layout_alignParentLeft="true"
+           android:id="@+id/episode_title"
+           android:textColor="@color/colorPrimaryBlack"
+           android:textSize="24dp"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content" />
+       <TextView
+           android:layout_marginTop="5dp"
+           android:layout_marginLeft="20dp"
+           android:layout_marginRight="20dp"
+           android:layout_marginBottom="5dp"
+           android:textSize="14dp"
+           android:textColor="@color/colorSecondaryText"
+           android:layout_alignParentLeft="true"
+           android:layout_below="@id/episode_title"
+           android:id="@+id/episode_date"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content" />
+       <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+           android:scaleType="fitCenter"
+           android:layout_below="@id/episode_title"
+           android:layout_marginTop="-3dp"
+           android:layout_marginRight="20dp"
+           android:layout_marginBottom="5dp"
+           android:layout_alignParentRight="true"
+           android:id="@+id/episode_download_button"
+           android:paddingLeft="5dp"
+           android:paddingRight="5dp"
+           android:text="@string/download"
+           android:textSize="12sp"
+           android:layout_gravity="center"
+           android:layout_width="wrap_content"
+           android:background="@drawable/button_bg_rounded_corners"
+           android:textColor="@color/colorPrimaryLight"
+           android:layout_height="32dp"
+           app:spinning_bar_padding="0dp"
+           app:spinning_bar_color="@color/colorPrimaryLight"
+           app:spinning_bar_width="3dp"
+           app:initialCornerAngle="0dp"
+           app:finalCornerAngle="50dp" />
+       <TextView
+           android:layout_marginTop="5dp"
+           android:layout_marginLeft="20dp"
+           android:layout_marginRight="20dp"
+           android:layout_marginBottom="10dp"
+           android:textSize="16dp"
+           android:textColor="@color/colorPrimaryBlack"
+           android:layout_alignParentLeft="true"
+           android:layout_below="@id/episode_date"
+           android:autoLink="web"
+           android:id="@+id/episode_description"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content" />
+   </RelativeLayout>
+
+</android.support.v4.widget.NestedScrollView>

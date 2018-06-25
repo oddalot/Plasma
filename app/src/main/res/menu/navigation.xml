@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_subscriptions"
+        android:icon="@drawable/ic_folder_icon"
+        android:title="@string/navigation_subscriptions" />
+
+    <item
+        android:id="@+id/navigation_episodes"
+        android:icon="@drawable/ic_episodes_icon"
+        android:title="@string/navigation_episodes" />
+
+    <item
+        android:id="@+id/navigation_downloads"
+        android:icon="@drawable/ic_archive_icon"
+        android:title="@string/navigation_downloads" />
+
+    <item
+        android:id="@+id/navigation_currently_playing"
+        android:icon="@drawable/ic_play_button"
+        android:title="Playing" />
+
+</menu>

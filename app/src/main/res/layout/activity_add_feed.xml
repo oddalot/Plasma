@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.williamott.plasma.activities.AddFeedActivity">
+
+    <EditText
+        android:id="@+id/add_feed_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+        android:scaleType="fitCenter"
+        android:layout_below="@id/episode_title"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="8dp"
+        android:id="@+id/add_feed_button"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:background="@drawable/button_bg_rounded_corners"
+        android:textColor="@color/colorPrimaryLight"
+        android:layout_height="wrap_content"
+        app:spinning_bar_padding="0dp"
+        app:spinning_bar_color="@color/colorPrimaryLight"
+        app:spinning_bar_width="3dp"
+        app:initialCornerAngle="0dp"
+        app:finalCornerAngle="50dp"
+        android:text="@string/submit_feed_button_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_feed_edit_text" />
+</android.support.constraint.ConstraintLayout>
