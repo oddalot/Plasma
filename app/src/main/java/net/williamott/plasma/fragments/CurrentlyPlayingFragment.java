@@ -49,6 +49,7 @@ public class CurrentlyPlayingFragment extends Fragment {
     private TextView mItemPosition;
     private Episode mEpisode;
     private String mEpisodeArtworkUrlOld;
+    private Boolean mIsScrubbing;
 
     public CurrentlyPlayingFragment() {
         // Required empty public constructor
@@ -66,6 +67,7 @@ public class CurrentlyPlayingFragment extends Fragment {
 
     @Override
     public void onStart() {
+        mIsScrubbing = false;
         mMediaBrowser = new MediaBrowserCompat(getActivity(), new ComponentName(getActivity(), MediaPlaybackService.class), mConnectionCallbacks, null);
         mMediaBrowser.connect();
         super.onStart();
@@ -209,17 +211,18 @@ public class CurrentlyPlayingFragment extends Fragment {
                     mItemSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                         @Override
                         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+                            mItemPosition.setText(getTimeString(progress));
                         }
 
                         @Override
                         public void onStartTrackingTouch(SeekBar seekBar) {
-
+                            mIsScrubbing = true;
                         }
 
                         @Override
                         public void onStopTrackingTouch(SeekBar seekBar) {
                             MediaControllerCompat.getMediaController(getActivity()).getTransportControls().seekTo(seekBar.getProgress());
+                            mIsScrubbing = false;
                         }
                     });
                 }
@@ -232,17 +235,18 @@ public class CurrentlyPlayingFragment extends Fragment {
                 mItemSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+                        mItemPosition.setText(getTimeString(progress));
                     }
 
                     @Override
                     public void onStartTrackingTouch(SeekBar seekBar) {
-
+                        mIsScrubbing = true;
                     }
 
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
                         MediaControllerCompat.getMediaController(getActivity()).getTransportControls().seekTo(seekBar.getProgress());
+                        mIsScrubbing = false;
                     }
                 });
             }
@@ -250,7 +254,7 @@ public class CurrentlyPlayingFragment extends Fragment {
     }
 
     public void updatePlayerState (PlaybackStateCompat state) {
-        if (mEpisode != null) {
+        if (mEpisode != null && !mIsScrubbing) {
             mPlayerState = state;
             if (mPlayButton != null) {
                 if (state.getState() == PlaybackStateCompat.STATE_PLAYING) {
