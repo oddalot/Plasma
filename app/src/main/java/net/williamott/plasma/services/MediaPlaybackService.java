@@ -97,7 +97,7 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements M
 
         mAfChangeListener = new AudioManager.OnAudioFocusChangeListener() {
             public void onAudioFocusChange(int focusChange) {
-                Log.d("here", "hereloss");
+                //Log.d("here", "hereloss");
                 if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT && mMediaPlayer.isPlaying()) {
                     mResumeOnFocusGain = true;
                     mMediaSession.getController().getTransportControls().pause();
@@ -126,6 +126,7 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements M
     @Override
     public void onDestroy() {
         mMediaSession.release();
+        mMediaPlayer.stop();
     }
 
     @Override
