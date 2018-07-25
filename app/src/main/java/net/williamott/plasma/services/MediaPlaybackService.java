@@ -98,21 +98,23 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements M
         mAfChangeListener = new AudioManager.OnAudioFocusChangeListener() {
             public void onAudioFocusChange(int focusChange) {
                 //Log.d("here", "hereloss");
-                if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT && mMediaPlayer.isPlaying()) {
-                    mResumeOnFocusGain = true;
-                    mMediaSession.getController().getTransportControls().pause();
-                } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK && mMediaPlayer.isPlaying()) {
-                    mResumeOnFocusGain = true;
-                    mMediaSession.getController().getTransportControls().pause();
-                } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
-                    if (mResumeOnFocusGain) {
+                if (mMediaPlayer != null && mMediaSession != null) {
+                    if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT && mMediaPlayer.isPlaying()) {
+                        mResumeOnFocusGain = true;
+                        mMediaSession.getController().getTransportControls().pause();
+                    } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK && mMediaPlayer.isPlaying()) {
+                        mResumeOnFocusGain = true;
+                        mMediaSession.getController().getTransportControls().pause();
+                    } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+                        if (mResumeOnFocusGain) {
+                            mResumeOnFocusGain = false;
+                            mMediaSession.getController().getTransportControls().play();
+                        }
+                    } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
                         mResumeOnFocusGain = false;
-                        mMediaSession.getController().getTransportControls().play();
+                        mAudioManager.abandonAudioFocus(mAfChangeListener);
+                        mMediaSession.getController().getTransportControls().pause();
                     }
-                } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
-                    mResumeOnFocusGain = false;
-                    mAudioManager.abandonAudioFocus(mAfChangeListener);
-                    mMediaSession.getController().getTransportControls().pause();
                 }
             }
         };
