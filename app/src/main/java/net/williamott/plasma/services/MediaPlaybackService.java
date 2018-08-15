@@ -105,7 +105,7 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements M
                     } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK && mMediaPlayer.isPlaying()  && mMediaSession.getController() != null) {
                         mResumeOnFocusGain = true;
                         mMediaSession.getController().getTransportControls().pause();
-                    } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+                    } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN  && mMediaSession.getController() != null) {
                         if (mResumeOnFocusGain) {
                             mResumeOnFocusGain = false;
                             mMediaSession.getController().getTransportControls().play();
