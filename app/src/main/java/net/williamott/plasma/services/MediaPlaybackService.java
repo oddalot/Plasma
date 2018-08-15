@@ -99,10 +99,10 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements M
             public void onAudioFocusChange(int focusChange) {
                 //Log.d("here", "hereloss");
                 if (mMediaPlayer != null && mMediaSession != null) {
-                    if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT && mMediaPlayer.isPlaying()) {
+                    if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT && mMediaPlayer.isPlaying() && mMediaSession.getController() != null) {
                         mResumeOnFocusGain = true;
                         mMediaSession.getController().getTransportControls().pause();
-                    } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK && mMediaPlayer.isPlaying()) {
+                    } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK && mMediaPlayer.isPlaying()  && mMediaSession.getController() != null) {
                         mResumeOnFocusGain = true;
                         mMediaSession.getController().getTransportControls().pause();
                     } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
@@ -110,7 +110,7 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements M
                             mResumeOnFocusGain = false;
                             mMediaSession.getController().getTransportControls().play();
                         }
-                    } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+                    } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS  && mMediaSession.getController() != null) {
                         mResumeOnFocusGain = false;
                         mAudioManager.abandonAudioFocus(mAfChangeListener);
                         mMediaSession.getController().getTransportControls().pause();
@@ -129,6 +129,8 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements M
     public void onDestroy() {
         mMediaSession.release();
         mMediaPlayer.stop();
+        mMediaSession = null;
+        mMediaPlayer = null;
     }
 
     @Override
