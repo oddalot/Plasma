@@ -62,6 +62,7 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements M
     public static final int NOTIFICATION_ID = 111234;
     private MediaSessionCompat mMediaSession;
     private PlaybackStateCompat.Builder mStateBuilder;
+    private Runnable mRunnable;
     private MediaPlayer mMediaPlayer;
     private Context mContext;
     private boolean mMediaPlaybackServiceStarted;
@@ -127,10 +128,22 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements M
 
     @Override
     public void onDestroy() {
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
+        }
+        mHandler = null;
+        mRunnable = null;
         mMediaSession.release();
         mMediaPlayer.stop();
+        mMediaPlayer.release();
         mMediaSession = null;
         mMediaPlayer = null;
+        if (mNoisyReceiverRegistered) {
+            unregisterReceiver(myNoisyAudioStreamReceiver);
+        }
+        if (mAudioManager != null) {
+            mAudioManager.abandonAudioFocus(mAfChangeListener);
+        }
     }
 
     @Override
@@ -344,9 +357,9 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements M
             mHandler = new Handler();
             final int delay = 1000; //milliseconds
 
-            mHandler.postDelayed(new Runnable() {
+            mRunnable = new Runnable() {
                 public void run() {
-                    if (mHandler != null) {
+                    if (mHandler != null && mMediaPlayer != null) {
                         int playbackState;
                         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
                         SharedPreferences.Editor editor = sharedPref.edit();
@@ -368,10 +381,12 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements M
                         mMediaSession.setPlaybackState(new PlaybackStateCompat.Builder()
                                 .setState(playbackState, mMediaPlayer.getCurrentPosition(), 0.0f)
                                 .setActions(PlaybackStateCompat.ACTION_PLAY_PAUSE).build());
-                        mHandler.postDelayed(this, delay);
+                        mHandler.postDelayed(mRunnable, delay);
                     }
                 }
-            }, delay);
+            };
+
+            mHandler.postDelayed(mRunnable, delay);
 
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
             SharedPreferences.Editor editor = sharedPref.edit();
